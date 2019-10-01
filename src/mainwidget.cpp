@@ -6,10 +6,13 @@
  * mainwidget.cpp
  **/
 
+#include <QtWidgets>
+
 #include "mainwidget.hpp"
 
 MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
 {
+    fractalView = new FractalView(this);
 }
 
 MainWidget::~MainWidget()

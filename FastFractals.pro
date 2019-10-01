@@ -1,6 +1,9 @@
 #
 # Matthew Smith
 # github.com/mattonaise
+# Created on Sep 29, 2019
+#
+# FastFractals.pro
 #
 
 # Project Settings
@@ -22,8 +25,8 @@ QMAKE_CXXFLAGS += -g
 
 # C/C++ source files
 VPATH += src/
-HEADERS += mainwidget.hpp
+HEADERS += mainwidget.hpp \
+    FractalView.hpp
 SOURCES += main.cpp \
-    mainwidget.cpp
-
-
+    mainwidget.cpp \
+    FractalView.cpp
