@@ -22,7 +22,8 @@ QMAKE_CXXFLAGS += -g
 
 # C/C++ source files
 VPATH += src/
-HEADERS +=
-SOURCES += main.cpp
+HEADERS += mainwidget.hpp
+SOURCES += main.cpp \
+    mainwidget.cpp
 
 
