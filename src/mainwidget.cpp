@@ -14,11 +14,11 @@
 
 MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
 {
-    fractalView = new FractalView(this);
+    m_fractalView = new FractalView(this);
 
     /* Set up horizontal layout */
     QHBoxLayout* hLayout = new QHBoxLayout;
-    hLayout->addWidget(fractalView);
+    hLayout->addWidget(m_fractalView);
     hLayout->setStretch(0, 3);
     setLayout(hLayout);
     

@@ -1,8 +1,19 @@
+/**
+ * Matthew Smith
+ * github.com/mattonaise
+ * Created on Oct 01, 2019
+ *
+ * fractalview.hpp
+ **/
+
 #ifndef FRACTALVIEW_HPP
 #define FRACTALVIEW_HPP
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include <QOpenGLBuffer>
+#include <QOpenGLVertexArrayObject>
+#include <QOpenGLShaderProgram>
 
 class FractalView : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -20,6 +31,10 @@ class FractalView : public QOpenGLWidget, protected QOpenGLFunctions
     private:
         void cleanupGL();
         void printContextInfo();
+
+        QOpenGLBuffer m_vbo;
+        QOpenGLVertexArrayObject m_vao;
+        QOpenGLShaderProgram* m_program;
 };
 
 #endif

@@ -22,7 +22,7 @@ class MainWidget : public QWidget
         ~MainWidget();
 
     private:
-        FractalView* fractalView;
+        FractalView* m_fractalView;
 
 };
 
