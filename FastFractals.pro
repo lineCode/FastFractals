@@ -26,7 +26,7 @@ QMAKE_CXXFLAGS += -g
 # C/C++ source files
 VPATH += src/
 HEADERS += mainwidget.hpp \
-    FractalView.hpp
+    fractalview.hpp
 SOURCES += main.cpp \
     mainwidget.cpp \
-    FractalView.cpp
+    fractalview.cpp

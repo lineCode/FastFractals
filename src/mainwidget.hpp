@@ -11,7 +11,7 @@
 
 #include <QWidget>
 
-#include "FractalView.hpp"
+#include "fractalview.hpp"
 
 class MainWidget : public QWidget
 {

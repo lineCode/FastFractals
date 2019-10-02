@@ -1,7 +1,7 @@
 #include <QDebug>
 #include <QString>
 
-#include "FractalView.hpp"
+#include "fractalview.hpp"
 
 /** PUBLIC **/
 
