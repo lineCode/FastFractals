@@ -27,6 +27,7 @@ int main(int argc, char* argv[])
             QDesktopWidget().availableGeometry(&mainWidget)
         )
     );
+    mainWidget.setWindowTitle("Fast Fractals");
     mainWidget.show();
 
     return app.exec();
