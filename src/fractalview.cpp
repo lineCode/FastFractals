@@ -105,7 +105,7 @@ void FractalView::cleanupGL()
     delete m_program;
 }
 
-/* Prints OpenGL info - called on initializeGL() */
+/* Prints OpenGL info - called in initializeGL() */
 void FractalView::printContextInfo() 
 {
     QString glType;
@@ -118,13 +118,13 @@ void FractalView::printContextInfo()
     switch(format().profile())
     {
         case QSurfaceFormat::NoProfile :
-            glProfile = "NoProfile";
+            glProfile = "No Profile";
             break;
         case QSurfaceFormat::CoreProfile :
-            glProfile = "CoreProfile";
+            glProfile = "Core Profile";
             break;
         case QSurfaceFormat::CompatibilityProfile :
-            glProfile = "CompatibilityProfile";
+            glProfile = "Compatibility Profile";
             break;
     }
 
