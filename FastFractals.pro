@@ -50,7 +50,8 @@ LIBS += -L $$CUDA_DIR/lib64 -lcudart -lcuda
 # CUDA compiler settings
 cuda.input = CUDA_SOURCES
 cuda.output = ${OBJECTS_DIR}${QMAKE_FILE_BASE}.o
-cuda.commands = $$CUDA_DIR/bin/nvcc -c -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
+cuda.commands = $$CUDA_DIR/bin/nvcc -c -g -o ${QMAKE_FILE_OUT} \
+    ${QMAKE_FILE_NAME}
 cuda.dependency_type = TYPE_C
 cuda.depend_command = $$CUDA_DIR/bin/nvcc -M ${QMAKE_FILE_NAME} \
     | sed \"s/^.*: //\"     # this line fixes empty target error in Makefile

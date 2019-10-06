@@ -18,6 +18,9 @@ class FractalGenerator : public QObject
     public:
         FractalGenerator(QObject* parent = nullptr);
         ~FractalGenerator();
+
+    private:
+        
 };
 
 #endif

@@ -9,7 +9,13 @@
 #ifndef CUDA_HPP
 #define CUDA_HPP
 
+#include <GL/gl.h>
+
 void cudaInit();
+void cudaPrintDeviceProperties(int device);
+void* cudaRegisterBuffer(GLuint buf);
+void cudaUnregisterResource(void* resource);
+void* cudaMapResource(void* resource);
 void cudaShutdown();
 
 #endif

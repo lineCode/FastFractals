@@ -41,7 +41,6 @@ void FractalView::initializeGL()
     initializeOpenGLFunctions();
     printContextInfo();
 
-    /* OpenGL Settings */
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     /* Set up shaders */
@@ -129,6 +128,6 @@ void FractalView::printContextInfo()
             break;
     }
 
-    qDebug() << qPrintable(glType) << qPrintable(glVersion) << "(" << 
+    qDebug() << "\t" << qPrintable(glType) << qPrintable(glVersion) << "(" << 
             qPrintable(glProfile) << ")";
 }
