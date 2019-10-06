@@ -26,16 +26,19 @@ QMAKE_CXXFLAGS += -g
 # C/C++ source files
 VPATH += src/
 HEADERS += mainwidget.hpp \
-    fractalview.hpp
-    shaders.hpp
+    fractalview.hpp \
+    shaders.hpp \
+    fractalgenerator.hpp \
+    cuda.hpp
 SOURCES += main.cpp \
     mainwidget.cpp \
-    fractalview.cpp
+    fractalview.cpp \
+    fractalgenerator.cpp
 
 ### CUDA ###
 
 # CUDA source files
-CUDA_SOURCES = 
+CUDA_SOURCES = cuda.cu
 
 # CUDA install directory
 CUDA_DIR = /opt/cuda

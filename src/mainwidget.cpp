@@ -11,10 +11,14 @@
 #include <QTextEdit>
 
 #include "mainwidget.hpp"
+#include "fractalview.hpp"
+#include "fractalgenerator.hpp"
 
 MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
 {
     m_fractalView = new FractalView(this);
+
+    m_fractalGenerator = new FractalGenerator();
 
     /* Set up horizontal layout */
     QHBoxLayout* hLayout = new QHBoxLayout(this);
@@ -31,4 +35,5 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
 MainWidget::~MainWidget()
 {
     /* No need to delete fractalView - parented to this widget */
+    delete m_fractalGenerator;
 }

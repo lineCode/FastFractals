@@ -108,6 +108,7 @@ void FractalView::cleanupGL()
 /* Prints OpenGL info - called in initializeGL() */
 void FractalView::printContextInfo() 
 {
+    qDebug() << "===OPENGL INFO===";
     QString glType;
     QString glVersion;
     QString glProfile;

@@ -20,7 +20,7 @@ class FractalView : public QOpenGLWidget, protected QOpenGLFunctions
     Q_OBJECT
     
     public:
-        FractalView(QWidget* parent = 0);
+        FractalView(QWidget* parent = nullptr);
         ~FractalView();
 
     protected:
