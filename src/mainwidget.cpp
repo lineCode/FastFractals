@@ -17,8 +17,11 @@
 MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
 {
     m_fractalView = new FractalView(this);
-
     m_fractalGenerator = new FractalGenerator();
+
+    /* connect signals and slots between view and generator */
+    connect(m_fractalView, &FractalView::glBufferCreated,
+            m_fractalGenerator, &FractalGenerator::registerGLBuffer);
 
     /* Set up horizontal layout */
     QHBoxLayout* hLayout = new QHBoxLayout(this);
@@ -36,4 +39,14 @@ MainWidget::~MainWidget()
 {
     /* No need to delete fractalView - parented to this widget */
     delete m_fractalGenerator;
+}
+
+/*
+ * Overriding closeEvent function to allow for unregistering of CUDA resource
+ * in the generator before the OpenGL context is lost
+ */
+void MainWidget::closeEvent(QCloseEvent* event)
+{
+    m_fractalGenerator->cleanup();
+    event->accept();
 }

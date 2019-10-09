@@ -22,6 +22,9 @@ class MainWidget : public QWidget
         explicit MainWidget(QWidget* parent = nullptr);
         ~MainWidget();
 
+    protected:
+        void closeEvent(QCloseEvent* event) override;
+
     private:
         FractalView* m_fractalView;
         FractalGenerator* m_fractalGenerator;

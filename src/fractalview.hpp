@@ -23,6 +23,9 @@ class FractalView : public QOpenGLWidget, protected QOpenGLFunctions
         FractalView(QWidget* parent = nullptr);
         ~FractalView();
 
+    signals:
+        void glBufferCreated(GLuint buf);
+
     protected:
         void initializeGL() override;
         void resizeGL(int w, int h) override;

@@ -71,6 +71,9 @@ void FractalView::initializeGL()
     m_vao.release();
     m_vbo.release();
     m_program->release();
+
+    /* emit signal to let FractalGenerator register buffer */
+    emit glBufferCreated(m_vbo.bufferId());
 }
 
 /* Resize OpenGL - called by QT when widget is resized */

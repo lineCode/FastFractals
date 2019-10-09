@@ -10,6 +10,7 @@
 #define FRACTALGENERATOR_HPP
 
 #include <QObject>
+#include <QOpenGLFunctions>
 
 class FractalGenerator : public QObject
 {
@@ -19,8 +20,14 @@ class FractalGenerator : public QObject
         FractalGenerator(QObject* parent = nullptr);
         ~FractalGenerator();
 
+        void cleanup();
+
+    public slots:
+        void registerGLBuffer(GLuint buf);
+
     private:
-        
+        void* m_cudaResource;
+
 };
 
 #endif

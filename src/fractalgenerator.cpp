@@ -11,7 +11,8 @@
 
 /* PUBLIC */
 
-FractalGenerator::FractalGenerator(QObject* parent) : QObject(parent)
+FractalGenerator::FractalGenerator(QObject* parent) : QObject(parent),
+    m_cudaResource(0)
 {
     cudaInit();
 }
@@ -19,4 +20,14 @@ FractalGenerator::FractalGenerator(QObject* parent) : QObject(parent)
 FractalGenerator::~FractalGenerator()
 {
     cudaShutdown();
+}
+
+void FractalGenerator::registerGLBuffer(GLuint buf)
+{
+    m_cudaResource = cudaRegisterBuffer(buf);
+}
+
+void FractalGenerator::cleanup()
+{
+    cudaUnregisterResource(m_cudaResource);
 }

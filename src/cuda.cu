@@ -64,6 +64,7 @@ void cudaPrintDeviceProperties(int device)
 
 void* cudaRegisterBuffer(GLuint buf)
 {
+    printf("CUDA: Registering OpenGL buffer %d\n", buf);
     cudaGraphicsResource* resource = nullptr;
     HANDLE_ERROR( cudaGraphicsGLRegisterBuffer(&resource, buf, 
             cudaGraphicsMapFlagsNone) );
@@ -72,6 +73,7 @@ void* cudaRegisterBuffer(GLuint buf)
 
 void cudaUnregisterResource(void* resource)
 {
+    printf("CUDA: Unregistering resource %p\n", resource);
     HANDLE_ERROR( cudaGraphicsUnregisterResource((cudaGraphicsResource*)
             resource) );
 }
