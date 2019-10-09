@@ -12,7 +12,9 @@
 
 #include "cuda.hpp"
 
-/* CUDA error-checking function and macro - from CUDA BY EXAMPLE */
+/* 
+ * CUDA error-checking function and macro - from CUDA BY EXAMPLE
+ */
 static void HandleError(cudaError_t err, const char* file, int line)
 {
     if(err != cudaSuccess)
@@ -27,7 +29,7 @@ void cudaInit()
 {
     printf("===CUDA INITIALIZATION===\n");
 
-    /* Select CUDA device with compute capability >=3.0 */
+    // Select CUDA device with compute capability >=3.0
     int device;
     cudaDeviceProp prop;
     memset(&prop, 0, sizeof(cudaDeviceProp));
@@ -40,14 +42,14 @@ void cudaInit()
 
 void cudaPrintDeviceProperties(int device)
 {
-    /* Query device properties */
+    // Query device properties
     cudaDeviceProp prop;
     int driverVersion, runtimeVersion;
     HANDLE_ERROR( cudaGetDeviceProperties(&prop, device) );
     HANDLE_ERROR( cudaDriverGetVersion(&driverVersion) );
     HANDLE_ERROR( cudaRuntimeGetVersion(&runtimeVersion) );
 
-    /* Print device properties */
+    // Print device properties
     printf("\tDevice Name: %s\n", prop.name);
     printf("\tCUDA Driver Version / Runtime Version: %d.%d / %d.%d\n",
             driverVersion / 1000, (driverVersion % 100) / 10,

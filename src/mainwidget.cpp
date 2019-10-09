@@ -19,17 +19,17 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
     m_fractalView = new FractalView(this);
     m_fractalGenerator = new FractalGenerator();
 
-    /* connect signals and slots between view and generator */
+    // connect signals and slots between view and generator
     connect(m_fractalView, &FractalView::glBufferCreated,
             m_fractalGenerator, &FractalGenerator::registerGLBuffer);
 
-    /* Set up horizontal layout */
+    // Set up horizontal layout
     QHBoxLayout* hLayout = new QHBoxLayout(this);
     hLayout->addWidget(m_fractalView);
     hLayout->setStretch(0, 3);
     setLayout(hLayout);
     
-    /* TODO remove temporary widget */
+    // TODO remove temporary widget
     QTextEdit* textEdit = new QTextEdit(this);
     hLayout->addWidget(textEdit);
     hLayout->setStretch(1, 1);
@@ -37,7 +37,7 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
 
 MainWidget::~MainWidget()
 {
-    /* No need to delete fractalView - parented to this widget */
+    // No need to delete fractalView - parented to this widget
     delete m_fractalGenerator;
 }
 

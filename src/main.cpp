@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 
     MainWidget mainWidget;
 
-    /* Set size and position of main window */
+    // Set size and position of main window
     mainWidget.resize(QDesktopWidget().availableGeometry(&mainWidget).size()
             * 0.5f);
     mainWidget.setGeometry(

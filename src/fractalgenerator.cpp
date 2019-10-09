@@ -9,8 +9,6 @@
 #include "fractalgenerator.hpp"
 #include "cuda.hpp"
 
-/* PUBLIC */
-
 FractalGenerator::FractalGenerator(QObject* parent) : QObject(parent),
     m_cudaResource(0)
 {
