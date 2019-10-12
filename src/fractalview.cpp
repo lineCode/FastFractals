@@ -27,6 +27,7 @@ FractalView::FractalView(QWidget* parent) : QOpenGLWidget(parent),
 
 FractalView::~FractalView()
 {
+    // set current context and cleanup resources
     makeCurrent();
     cleanupGL();
 }

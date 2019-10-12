@@ -11,6 +11,7 @@
 #include <cuda_gl_interop.h>
 
 #include "cuda.hpp"
+#include "kernel.cu"
 
 /* 
  * CUDA error-checking function and macro - from CUDA BY EXAMPLE
@@ -95,6 +96,15 @@ void cudaUnmapResource(void* resource)
 {
     HANDLE_ERROR( cudaGraphicsUnmapResources(1, (cudaGraphicsResource**)
             &resource) );
+}
+
+void cudaRunKernel(void* devicePtr)
+{
+    kernel<<<5,5>>>();
+
+    // handle any synchronous and asynchronous kernel errors
+    HANDLE_ERROR( cudaGetLastError() );
+    HANDLE_ERROR( cudaDeviceSynchronize() );
 }
 
 void cudaShutdown()

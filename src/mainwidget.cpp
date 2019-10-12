@@ -8,7 +8,7 @@
 
 #include <QtWidgets>
 #include <QHBoxLayout>
-#include <QTextEdit>
+#include <QPushButton>
 
 #include "mainwidget.hpp"
 #include "fractalview.hpp"
@@ -30,8 +30,13 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
     setLayout(hLayout);
     
     // TODO remove temporary widget
-    QTextEdit* textEdit = new QTextEdit(this);
-    hLayout->addWidget(textEdit);
+    QPushButton* button = new QPushButton("CUDA", this);
+    button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    button->setFlat(true);
+    connect(button, &QPushButton::clicked, m_fractalGenerator,
+            &FractalGenerator::generateFractal);
+
+    hLayout->addWidget(button);
     hLayout->setStretch(1, 1);
 }
 
@@ -43,7 +48,7 @@ MainWidget::~MainWidget()
 
 /*
  * Overriding closeEvent function to allow for unregistering of CUDA resource
- * in the generator before the OpenGL context is lost
+ * in the FractalGenerator before the OpenGL context is lost
  */
 void MainWidget::closeEvent(QCloseEvent* event)
 {

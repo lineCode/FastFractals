@@ -24,6 +24,7 @@ class FractalGenerator : public QObject
 
     public slots:
         void registerGLBuffer(GLuint buf);
+        void generateFractal();
 
     private:
         void* m_cudaResource;
