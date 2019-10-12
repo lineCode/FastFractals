@@ -15,9 +15,9 @@ void cudaInit();
 void cudaPrintDeviceProperties(int device);
 void* cudaRegisterBuffer(GLuint buf);
 void cudaUnregisterResource(void* resource);
-void* cudaMapResource(void* resource);
+void cudaMapResource(void* resource, void** devicePtr, size_t* size);
 void cudaUnmapResource(void* resource);
-void cudaRunKernel(void* devicePtr);
+void cudaRunKernel(void* devicePtr, size_t size);
 void cudaShutdown();
 
 #endif

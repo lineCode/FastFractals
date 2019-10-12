@@ -7,10 +7,13 @@
  **/
 
 #include <stdio.h>
+#include <assert.h>
 #include <cuda.h>
 #include <cuda_gl_interop.h>
 
 #include "cuda.hpp"
+
+// defining kernel in seperate source file for clarity
 #include "kernel.cu"
 
 /* 
@@ -81,15 +84,25 @@ void cudaUnregisterResource(void* resource)
             resource) );
 }
 
-void* cudaMapResource(void* resource)
+void cudaMapResource(void* resource, void** devicePtr, size_t* size)
 {
+    // map CUDA resource and get device pointer and size
     HANDLE_ERROR( cudaGraphicsMapResources(1, (cudaGraphicsResource**)
             &resource) );
-    void* devicePtr = nullptr;
-    size_t size;
-    HANDLE_ERROR( cudaGraphicsResourceGetMappedPointer(&devicePtr, &size,
+    void* devicePtr_ = nullptr;
+    size_t size_ = 0;
+    HANDLE_ERROR( cudaGraphicsResourceGetMappedPointer(&devicePtr_, &size_,
             (cudaGraphicsResource*) resource) );
-    return devicePtr;
+    printf("CUDA: Mapped resource returned pointer %p with size %d\n",
+            devicePtr_, size_);
+
+    // ensure devicePtr_ and size_ are valid
+    assert(devicePtr_ != nullptr);
+    assert(size_ != 0);
+    
+    // set pointer values
+    *devicePtr = devicePtr_;
+    *size = size_;
 }
 
 void cudaUnmapResource(void* resource)
@@ -98,7 +111,7 @@ void cudaUnmapResource(void* resource)
             &resource) );
 }
 
-void cudaRunKernel(void* devicePtr)
+void cudaRunKernel(void* devicePtr, size_t size)
 {
     kernel<<<5,5>>>();
 

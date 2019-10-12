@@ -35,8 +35,10 @@ void FractalGenerator::registerGLBuffer(GLuint buf)
  */
 void FractalGenerator::generateFractal()
 {
-    void* devicePtr = cudaMapResource(m_cudaResource);
-    cudaRunKernel(devicePtr);
+    void* devicePtr;
+    size_t size;
+    cudaMapResource(m_cudaResource, &devicePtr, &size);
+    cudaRunKernel(devicePtr, size);
     cudaUnmapResource(m_cudaResource);
 }
 
