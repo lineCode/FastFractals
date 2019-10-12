@@ -11,8 +11,8 @@
 
 #include "cuda.hpp"
 
-__global__ void kernel()
+__global__ void kernel(float3* ptr, size_t size)
 {
     int index = blockIdx.x * blockDim.x + threadIdx.x;
-    printf("Hi, I'm thread %d\n", index);
+    ptr[index].x += 0.1f;
 }

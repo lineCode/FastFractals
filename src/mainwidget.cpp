@@ -22,6 +22,8 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
     // connect signals and slots between view and generator
     connect(m_fractalView, &FractalView::glBufferCreated,
             m_fractalGenerator, &FractalGenerator::registerGLBuffer);
+    connect(m_fractalGenerator, &FractalGenerator::fractalUpdated,
+            [this](){m_fractalView->update();});
 
     // Set up horizontal layout
     QHBoxLayout* hLayout = new QHBoxLayout(this);

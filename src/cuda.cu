@@ -70,7 +70,6 @@ void cudaPrintDeviceProperties(int device)
 
 void* cudaRegisterBuffer(GLuint buf)
 {
-    printf("CUDA: Registering OpenGL buffer %d\n", buf);
     cudaGraphicsResource* resource = nullptr;
     HANDLE_ERROR( cudaGraphicsGLRegisterBuffer(&resource, buf, 
             cudaGraphicsMapFlagsNone) );
@@ -79,7 +78,6 @@ void* cudaRegisterBuffer(GLuint buf)
 
 void cudaUnregisterResource(void* resource)
 {
-    printf("CUDA: Unregistering resource %p\n", resource);
     HANDLE_ERROR( cudaGraphicsUnregisterResource((cudaGraphicsResource*)
             resource) );
 }
@@ -93,8 +91,6 @@ void cudaMapResource(void* resource, void** devicePtr, size_t* size)
     size_t size_ = 0;
     HANDLE_ERROR( cudaGraphicsResourceGetMappedPointer(&devicePtr_, &size_,
             (cudaGraphicsResource*) resource) );
-    printf("CUDA: Mapped resource returned pointer %p with size %d\n",
-            devicePtr_, size_);
 
     // ensure devicePtr_ and size_ are valid
     assert(devicePtr_ != nullptr);
@@ -113,7 +109,11 @@ void cudaUnmapResource(void* resource)
 
 void cudaRunKernel(void* devicePtr, size_t size)
 {
-    kernel<<<5,5>>>();
+    int blocks = 1;
+    size_t newSize = size / sizeof(float3);
+    printf("CUDA: Running kernel (%d blocks, %d threads per block)\n",
+            blocks, newSize);
+    kernel<<<blocks,newSize>>>((float3*)devicePtr, newSize);
 
     // handle any synchronous and asynchronous kernel errors
     HANDLE_ERROR( cudaGetLastError() );

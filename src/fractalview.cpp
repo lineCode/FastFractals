@@ -33,7 +33,8 @@ FractalView::~FractalView()
 }
 
 /*
- * Sets up OpenGL context - called by QT 
+ * Sets up OpenGL context
+ * Called by QT
  */
 void FractalView::initializeGL()
 {
@@ -76,7 +77,8 @@ void FractalView::initializeGL()
 }
 
 /*
- * Resize OpenGL - called by QT when widget is resized
+ * Resize OpenGL
+ * Called by QT when widget is resized
  */
 void FractalView::resizeGL(int w, int h)
 {
@@ -86,7 +88,8 @@ void FractalView::resizeGL(int w, int h)
 }
 
 /* 
- * Redraw the scene - called by QT when redrawing widget
+ * Redraw the scene
+ * Called by QT when redrawing widget
  */
 void FractalView::paintGL()
 {
@@ -101,7 +104,8 @@ void FractalView::paintGL()
 }
 
 /* 
- * Clean up OpenGL - called in destructor
+ * Clean up OpenGL
+ * Called in destructor
  */
 void FractalView::cleanupGL()
 {
@@ -111,7 +115,8 @@ void FractalView::cleanupGL()
 }
 
 /* 
- * Prints OpenGL info - called in initializeGL() 
+ * Prints OpenGL info
+ * Called in initializeGL() 
  */
 void FractalView::printContextInfo() 
 {

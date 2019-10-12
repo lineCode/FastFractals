@@ -21,8 +21,8 @@ FractalGenerator::~FractalGenerator()
 }
 
 /*
- * Calls CUDA code to register OpenGL vertex buffer object - called by
- * FractalView constructor
+ * Calls CUDA code to register OpenGL vertex buffer object
+ * Called by FractalView constructor
  */
 void FractalGenerator::registerGLBuffer(GLuint buf)
 {
@@ -30,8 +30,8 @@ void FractalGenerator::registerGLBuffer(GLuint buf)
 }
 
 /*
- * Calls CUDA kernel to generate fractal - called whenever current fractal
- * model is updated
+ * Calls CUDA kernel to generate fractal and emits signal for redrawing
+ * Called whenever current fractal model is updated
  */
 void FractalGenerator::generateFractal()
 {
@@ -40,10 +40,14 @@ void FractalGenerator::generateFractal()
     cudaMapResource(m_cudaResource, &devicePtr, &size);
     cudaRunKernel(devicePtr, size);
     cudaUnmapResource(m_cudaResource);
+
+    // emit signal to schedule a redraw in FractalView
+    emit fractalUpdated();
 }
 
 /*
- * Cleans up CUDA graphics resource - called on exit
+ * Cleans up CUDA graphics resource
+ * Called on exit
  */
 void FractalGenerator::cleanup()
 {

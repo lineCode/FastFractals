@@ -22,6 +22,9 @@ class FractalGenerator : public QObject
 
         void cleanup();
 
+    signals:
+        void fractalUpdated();
+
     public slots:
         void registerGLBuffer(GLuint buf);
         void generateFractal();
