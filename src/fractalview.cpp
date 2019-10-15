@@ -51,7 +51,7 @@ void FractalView::initializeGL()
     m_vbo.create();
     m_vbo.bind();
     m_vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-    m_vbo.allocate(65536 * 4 * sizeof(float));
+    m_vbo.allocate(65536*4 * 4 * sizeof(float));
 
     // Create VAO
     m_vao.create();
@@ -93,7 +93,7 @@ void FractalView::paintGL()
     // Render
     m_program->bind();
     m_vao.bind();
-    glDrawArrays(GL_POINTS, 0, 65536);
+    glDrawArrays(GL_POINTS, 0, 65536*4);
     m_vao.release();
     m_program->release();
 }

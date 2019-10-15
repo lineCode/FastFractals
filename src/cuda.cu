@@ -115,7 +115,9 @@ void cudaRunKernel(void* devicePtr, size_t size)
     // calculate block numbers and block size
     int blockSize = 256;
     int numPoints = size / sizeof(float4);
-    int numBlocks = (numPoints + blockSize - 1) / blockSize; 
+    //int iterations = 256;
+    //int numBlocks = (numPoints + blockSize - 1) / (blockSize * iterations); 
+    int numBlocks = 1;
     printf("CUDA: Running kernel (%d block(s), %d threads per block) - ",
             numBlocks, blockSize);
     
