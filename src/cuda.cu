@@ -112,16 +112,31 @@ void cudaUnmapResource(void* resource)
 
 void cudaRunKernel(void* devicePtr, size_t size)
 {
+    // calculate block numbers and block size
     int blockSize = 256;
     int numPoints = size / sizeof(float4);
-    int numBlocks = (numPoints + blockSize - 1) / blockSize;
-    printf("CUDA: Running kernel (%d block(s), %d threads per block)\n",
+    int numBlocks = (numPoints + blockSize - 1) / blockSize; 
+    printf("CUDA: Running kernel (%d block(s), %d threads per block) - ",
             numBlocks, blockSize);
+    
+    // set up CUDA events for timing the kernel
+    cudaEvent_t start, stop;
+    HANDLE_ERROR( cudaEventCreate(&start) );
+    HANDLE_ERROR( cudaEventCreate(&stop) );
+    
+    HANDLE_ERROR( cudaEventRecord(start) );
     kernel<<<numBlocks,blockSize>>>((float4*)devicePtr, numPoints);
-
+    HANDLE_ERROR( cudaEventRecord(stop) );
+ 
     // handle any synchronous and asynchronous kernel errors
     HANDLE_ERROR( cudaGetLastError() );
     HANDLE_ERROR( cudaDeviceSynchronize() );
+
+    // record and print kernel timing
+    HANDLE_ERROR( cudaEventSynchronize(stop) );
+    float milliseconds = 0;
+    HANDLE_ERROR( cudaEventElapsedTime(&milliseconds, start, stop) );
+    printf("%f ms\n", milliseconds);
 }
 
 void cudaShutdown()
