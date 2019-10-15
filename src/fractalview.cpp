@@ -12,13 +12,6 @@
 #include "fractalview.hpp"
 #include "shaders.hpp"
 
-// TODO remove temp vertices
-static const float vertices[] = {
-    -0.5f, -0.5f, 0.0f, 1.0f,
-    0.5f, -0.5f, 0.3f, 1.0f,
-    0.0f, 0.5f, 0.6f, 1.0f
-};
-
 FractalView::FractalView(QWidget* parent) : QOpenGLWidget(parent),
     m_program(0)
 {
@@ -41,7 +34,9 @@ void FractalView::initializeGL()
     initializeOpenGLFunctions();
     printContextInfo();
 
+    // OpenGL settings
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glEnable(GL_PROGRAM_POINT_SIZE);
 
     // Set up shaders
     m_program = new QOpenGLShaderProgram();
@@ -56,7 +51,7 @@ void FractalView::initializeGL()
     m_vbo.create();
     m_vbo.bind();
     m_vbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-    m_vbo.allocate(vertices, sizeof(vertices));
+    m_vbo.allocate(65536 * 4 * sizeof(float));
 
     // Create VAO
     m_vao.create();
@@ -98,7 +93,7 @@ void FractalView::paintGL()
     // Render
     m_program->bind();
     m_vao.bind();
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_POINTS, 0, 65536);
     m_vao.release();
     m_program->release();
 }

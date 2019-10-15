@@ -9,6 +9,8 @@
 #ifndef CUDA_HPP
 #define CUDA_HPP
 
+#include <cstddef>
+
 #include <GL/gl.h>
 
 void cudaInit();

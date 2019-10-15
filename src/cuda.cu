@@ -10,6 +10,7 @@
 #include <assert.h>
 #include <cuda.h>
 #include <cuda_gl_interop.h>
+#include <curand_kernel.h>
 
 #include "cuda.hpp"
 
@@ -19,12 +20,14 @@
 /* 
  * CUDA error-checking function and macro - from CUDA BY EXAMPLE
  */
-static void HandleError(cudaError_t err, const char* file, int line)
+static void HandleError(cudaError_t err, const char* file, int line,
+    bool abort = true)
 {
     if(err != cudaSuccess)
     {
         printf("%s in %s at line %d\n", cudaGetErrorString(err), file, line);
-        exit(EXIT_FAILURE);
+        if(abort)
+            exit(EXIT_FAILURE);
     }
 }
 #define HANDLE_ERROR( err) (HandleError( err, __FILE__, __LINE__ ))
@@ -109,11 +112,12 @@ void cudaUnmapResource(void* resource)
 
 void cudaRunKernel(void* devicePtr, size_t size)
 {
-    int blocks = 1;
-    size_t newSize = size / sizeof(float4);
-    printf("CUDA: Running kernel (%d blocks, %d threads per block)\n",
-            blocks, newSize);
-    kernel<<<blocks,newSize>>>((float4*)devicePtr, newSize);
+    int blockSize = 256;
+    int numPoints = size / sizeof(float4);
+    int numBlocks = (numPoints + blockSize - 1) / blockSize;
+    printf("CUDA: Running kernel (%d block(s), %d threads per block)\n",
+            numBlocks, blockSize);
+    kernel<<<numBlocks,blockSize>>>((float4*)devicePtr, numPoints);
 
     // handle any synchronous and asynchronous kernel errors
     HANDLE_ERROR( cudaGetLastError() );
