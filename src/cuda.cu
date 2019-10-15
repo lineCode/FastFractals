@@ -110,10 +110,10 @@ void cudaUnmapResource(void* resource)
 void cudaRunKernel(void* devicePtr, size_t size)
 {
     int blocks = 1;
-    size_t newSize = size / sizeof(float3);
+    size_t newSize = size / sizeof(float4);
     printf("CUDA: Running kernel (%d blocks, %d threads per block)\n",
             blocks, newSize);
-    kernel<<<blocks,newSize>>>((float3*)devicePtr, newSize);
+    kernel<<<blocks,newSize>>>((float4*)devicePtr, newSize);
 
     // handle any synchronous and asynchronous kernel errors
     HANDLE_ERROR( cudaGetLastError() );

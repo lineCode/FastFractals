@@ -14,9 +14,9 @@
 
 // TODO remove temp vertices
 static const float vertices[] = {
-    -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,
-    0.5f, -0.5f, 0.0f,      0.0f, 1.0f, 0.0f,
-    0.0f, 0.5f, 0.0f,       0.0f, 0.0f, 1.0f
+    -0.5f, -0.5f, 0.0f, 1.0f,
+    0.5f, -0.5f, 0.3f, 1.0f,
+    0.0f, 0.5f, 0.6f, 1.0f
 };
 
 FractalView::FractalView(QWidget* parent) : QOpenGLWidget(parent),
@@ -63,9 +63,9 @@ void FractalView::initializeGL()
     m_vao.bind();
     m_program->enableAttributeArray(0);
     m_program->enableAttributeArray(1);
-    m_program->setAttributeBuffer(0, GL_FLOAT, 0, 3, 6 * sizeof(float));
-    m_program->setAttributeBuffer(1, GL_FLOAT, 3 * sizeof(float), 3,
-            6 * sizeof(float));
+    m_program->setAttributeBuffer(0, GL_FLOAT, 0, 2, 4 * sizeof(float));
+    m_program->setAttributeBuffer(1, GL_FLOAT, 2 * sizeof(float), 2, 
+            4 * sizeof(float));
 
     // Unbind all
     m_vao.release();
