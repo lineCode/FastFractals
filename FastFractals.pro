@@ -29,11 +29,14 @@ HEADERS += mainwidget.hpp \
     fractalview.hpp \
     shaders.hpp \
     fractalgenerator.hpp \
-    cuda.hpp
+    cuda.hpp \
+    fractalmodel.hpp \
+    defaultvalues.hpp
 SOURCES += main.cpp \
     mainwidget.cpp \
     fractalview.cpp \
-    fractalgenerator.cpp
+    fractalgenerator.cpp \
+    fractalmodel.cpp
 
 ### CUDA ###
 

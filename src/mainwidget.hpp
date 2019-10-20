@@ -13,6 +13,7 @@
 
 class FractalView;
 class FractalGenerator;
+class FractalModel;
 
 class MainWidget : public QWidget
 {
@@ -22,12 +23,18 @@ class MainWidget : public QWidget
         explicit MainWidget(QWidget* parent = nullptr);
         ~MainWidget();
 
+    signals:
+        void modelUpdated(FractalModel* newModel);
+
     protected:
         void closeEvent(QCloseEvent* event) override;
 
     private:
+        void setUpUI();
+
         FractalView* m_fractalView;
         FractalGenerator* m_fractalGenerator;
+        FractalModel* m_currentModel;
 
 };
 

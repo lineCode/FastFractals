@@ -110,11 +110,10 @@ void cudaUnmapResource(void* resource)
             &resource) );
 }
 
-void cudaRunKernel(void* devicePtr, size_t size)
+void cudaRunKernel(void* devicePtr, int numPoints)
 {
     // calculate block numbers and block size
     int blockSize = 256;
-    int numPoints = size / sizeof(float4);
     //int iterations = 256;
     //int numBlocks = (numPoints + blockSize - 1) / (blockSize * iterations); 
     int numBlocks = 1;

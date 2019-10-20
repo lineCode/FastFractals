@@ -12,12 +12,14 @@
 #include <QObject>
 #include <QOpenGLFunctions>
 
+class FractalModel;
+
 class FractalGenerator : public QObject
 {
     Q_OBJECT
 
     public:
-        FractalGenerator(QObject* parent = nullptr);
+        FractalGenerator(FractalModel* model, QObject* parent = nullptr);
         ~FractalGenerator();
 
         void cleanup();
@@ -27,11 +29,13 @@ class FractalGenerator : public QObject
 
     public slots:
         void registerGLBuffer(GLuint buf);
+        void updateModel(FractalModel* newModel);
         void generateFractal();
 
     private:
         void* m_cudaResource;
 
+        FractalModel* m_currentModel;
 };
 
 #endif

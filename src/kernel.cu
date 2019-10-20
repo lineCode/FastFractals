@@ -38,7 +38,7 @@ __global__ void kernel(float4* ptr, int numPoints)
         ptr[i].y = currentPosition.y;
 
         // set the iteration percentage and current target vertex
-        ptr[i].z = (float) i / numPoints;
+        ptr[i].z =  i / (float) numPoints;
         ptr[i].w = currentTarget;
 
         // pick a random translation vertex and move halfway there

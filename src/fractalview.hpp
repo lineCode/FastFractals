@@ -15,16 +15,21 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
 
+#include "fractalmodel.hpp"
+
 class FractalView : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
     
     public:
-        FractalView(QWidget* parent = nullptr);
+        FractalView(FractalModel* model, QWidget* parent = nullptr);
         ~FractalView();
 
     signals:
         void glBufferCreated(GLuint buf);
+
+    public slots:
+        void updateModel(FractalModel* newModel) {m_currentModel = newModel;}
 
     protected:
         void initializeGL() override;
@@ -38,6 +43,8 @@ class FractalView : public QOpenGLWidget, protected QOpenGLFunctions
         QOpenGLBuffer m_vbo;
         QOpenGLVertexArrayObject m_vao;
         QOpenGLShaderProgram* m_program;
+
+        FractalModel* m_currentModel;
 };
 
 #endif
