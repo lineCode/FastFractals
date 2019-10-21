@@ -31,7 +31,8 @@ HEADERS += mainwidget.hpp \
     fractalgenerator.hpp \
     cuda.hpp \
     fractalmodel.hpp \
-    defaultvalues.hpp
+    defaultvalues.hpp \
+    mapping.hpp
 SOURCES += main.cpp \
     mainwidget.cpp \
     fractalview.cpp \

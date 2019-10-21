@@ -16,20 +16,23 @@ __global__ void kernel(float4* ptr, int numPoints)
     curandState state;
     curand_init((unsigned long long) clock(), index, 0, &state);
 
-    // Set up translation vertices once per block in shared memory
-    __shared__ float2 vertices[3];
+    // Set up transformation mapping once per block in shared memory
+    __shared__ mapping maps[4];
     if(threadIdx.x == 0)
     {
-        vertices[0] = {-1.0f, -1.0f};
-        vertices[1] = {1.0f, -1.0f};
-        vertices[2] = {-1.0f, 1.0f};
+        maps[0] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.16f, 0.01f};
+        maps[1] = {0.0f, 1.6f, 0.85f, 0.04f, -0.04f, 0.85f, 0.85f};
+        maps[2] = {0.0f, 1.6f, 0.2f, -0.26f, 0.23f, 0.22f, 0.07f};
+        maps[3] = {0.0f, 0.44f, -0.15f, 0.28f, 0.26f, 0.24f, 0.07};
     }
     __syncthreads();
 
-    // Initially start at a translation vertex to guarantee we stay inside the
+    // Initially start at a mapping vertex to guarantee we stay inside the
     // iterated function system
-    int currentTarget = index % 3;
-    float2 currentPosition = vertices[currentTarget];
+    int currentTarget = index % 4;
+    float2 currentPosition, newPosition;
+    currentPosition.x = maps[currentTarget].x;
+    currentPosition.y = maps[currentTarget].y;
    
     for(int i = index; i < numPoints; i += stride)
     {
@@ -37,13 +40,33 @@ __global__ void kernel(float4* ptr, int numPoints)
         ptr[i].x = currentPosition.x;
         ptr[i].y = currentPosition.y;
 
-        // set the iteration percentage and current target vertex
+        // set the iteration percentage and current target mapping
         ptr[i].z =  i / (float) numPoints;
         ptr[i].w = currentTarget;
 
-        // pick a random translation vertex and move halfway there
-        currentTarget = curand_uniform(&state) * 3;
-        currentPosition.x = (currentPosition.x + vertices[currentTarget].x)/2;
-        currentPosition.y = (currentPosition.y + vertices[currentTarget].y)/2;
+        // find random target with given mapping probabilities
+        // If needed for performance, find method to remove thread divergence
+        float currentProb = curand_uniform(&state);
+        float totalProb = 0.0f;
+        for(int j = 0; j < 4; j++)
+        {
+            totalProb += maps[j].p;
+            if(currentProb < totalProb)
+            {
+                currentTarget = j;
+                break;
+            }
+        }
+
+        // calculate the transformation
+        // (x_n+1) = (a b)(x_n) + (e)
+        // (y_n+1)   (c d)(y_n)   (f)
+        newPosition.x = maps[currentTarget].a * currentPosition.x +
+                        maps[currentTarget].b * currentPosition.y +
+                        maps[currentTarget].x;
+        newPosition.y = maps[currentTarget].c * currentPosition.x +
+                        maps[currentTarget].d * currentPosition.y +
+                        maps[currentTarget].y;
+        currentPosition = newPosition;
     }
 }

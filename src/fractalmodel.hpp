@@ -14,10 +14,10 @@
 class FractalModel
 {
     public:
-        FractalModel() {} 
+        FractalModel() : m_numPoints(DEFAULT_POINTS) {} 
         ~FractalModel() {}
 
-        int m_numPoints {DEFAULT_POINTS};
+        int m_numPoints;
 };
 
 #endif

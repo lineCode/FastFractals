@@ -13,6 +13,7 @@
 #include <curand_kernel.h>
 
 #include "cuda.hpp"
+#include "mapping.hpp"
 
 // defining kernel in seperate source file for clarity
 #include "kernel.cu"

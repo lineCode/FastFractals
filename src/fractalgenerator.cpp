@@ -31,7 +31,7 @@ void FractalGenerator::registerGLBuffer(GLuint buf)
 }
 
 /*
- * Updated m_curentModel pointer and regenerates fractal
+ * Updates m_curentModel pointer and regenerates fractal
  * Called by MainWidget UI elements
  */
 void FractalGenerator::updateModel(FractalModel* newModel)
