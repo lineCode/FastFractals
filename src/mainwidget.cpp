@@ -35,7 +35,7 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
     connect(this, &MainWidget::modelUpdated,
             m_fractalGenerator, &FractalGenerator::updateModel);
     
-    // seperating out UI initializtion into seperate function for clarity
+    // seperating out UI initialization into seperate function for clarity
     setUpUI();
 }
 
@@ -70,11 +70,12 @@ void MainWidget::setUpUI()
     slider->setTickPosition(QSlider::TicksBothSides);
     slider->setTickInterval(MAX_POINTS / 4);
     slider->setValue(DEFAULT_POINTS);
+    slider->setSingleStep(1000);
     connect(slider, &QSlider::valueChanged,
             [this](int value)
             {
                 m_currentModel->m_numPoints = value;
-                emit modelUpdated(m_currentModel);
+                m_fractalGenerator->generateFractal();
             });
     vLayout->addWidget(slider);
     vLayout->setStretch(1, 1);

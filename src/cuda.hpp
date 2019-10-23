@@ -19,7 +19,7 @@ void* cudaRegisterBuffer(GLuint buf);
 void cudaUnregisterResource(void* resource);
 void cudaMapResource(void* resource, void** devicePtr, size_t* size);
 void cudaUnmapResource(void* resource);
-void cudaRunKernel(void* devicePtr, int numPoints);
+void cudaRunKernel(void* d_pointData, int numPoints, int numMappings);
 void cudaShutdown();
 
 #endif

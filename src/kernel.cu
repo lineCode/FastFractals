@@ -6,7 +6,7 @@
  * kernel.cu
  **/
 
-__global__ void kernel(float4* ptr, int numPoints)
+__global__ void kernel(float4* d_pointData, int numPoints)
 {
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
@@ -17,7 +17,7 @@ __global__ void kernel(float4* ptr, int numPoints)
     curand_init((unsigned long long) clock(), index, 0, &state);
 
     // Set up transformation mapping once per block in shared memory
-    __shared__ mapping maps[4];
+    extern __shared__ mapping maps[];
     if(threadIdx.x == 0)
     {
         maps[0] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.16f, 0.01f};
@@ -37,12 +37,12 @@ __global__ void kernel(float4* ptr, int numPoints)
     for(int i = index; i < numPoints; i += stride)
     {
         // set the current vertex to the currentPosition
-        ptr[i].x = currentPosition.x;
-        ptr[i].y = currentPosition.y;
+        d_pointData[i].x = currentPosition.x;
+        d_pointData[i].y = currentPosition.y;
 
         // set the iteration percentage and current target mapping
-        ptr[i].z =  i / (float) numPoints;
-        ptr[i].w = currentTarget;
+        d_pointData[i].z =  i / (float) numPoints;
+        d_pointData[i].w = currentTarget;
 
         // find random target with given mapping probabilities
         // If needed for performance, find method to remove thread divergence

@@ -111,7 +111,7 @@ void cudaUnmapResource(void* resource)
             &resource) );
 }
 
-void cudaRunKernel(void* devicePtr, int numPoints)
+void cudaRunKernel(void* d_pointData, int numPoints, int numMappings)
 {
     // calculate block numbers and block size
     int blockSize = 256;
@@ -127,7 +127,8 @@ void cudaRunKernel(void* devicePtr, int numPoints)
     HANDLE_ERROR( cudaEventCreate(&stop) );
     
     HANDLE_ERROR( cudaEventRecord(start) );
-    kernel<<<numBlocks,blockSize>>>((float4*)devicePtr, numPoints);
+    kernel<<<numBlocks, blockSize, numMappings * sizeof(mapping)>>>
+        ((float4*)d_pointData, numPoints);
     HANDLE_ERROR( cudaEventRecord(stop) );
  
     // handle any synchronous and asynchronous kernel errors
