@@ -6,7 +6,8 @@
  * kernel.cu
  **/
 
-__global__ void kernel(float4* d_pointData, int numPoints)
+__global__ void kernel(float4* d_pointData, int numPoints,
+        mapping* d_mappings, int numMappings)
 {
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
@@ -20,16 +21,14 @@ __global__ void kernel(float4* d_pointData, int numPoints)
     extern __shared__ mapping maps[];
     if(threadIdx.x == 0)
     {
-        maps[0] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.16f, 0.01f};
-        maps[1] = {0.0f, 1.6f, 0.85f, 0.04f, -0.04f, 0.85f, 0.85f};
-        maps[2] = {0.0f, 1.6f, 0.2f, -0.26f, 0.23f, 0.22f, 0.07f};
-        maps[3] = {0.0f, 0.44f, -0.15f, 0.28f, 0.26f, 0.24f, 0.07};
+        for(int i = 0; i < numMappings; i++)
+            maps[i] = d_mappings[i];
     }
     __syncthreads();
 
     // Initially start at a mapping vertex to guarantee we stay inside the
     // iterated function system
-    int currentTarget = index % 4;
+    int currentTarget = index % numMappings;
     float2 currentPosition, newPosition;
     currentPosition.x = maps[currentTarget].x;
     currentPosition.y = maps[currentTarget].y;
@@ -46,9 +45,10 @@ __global__ void kernel(float4* d_pointData, int numPoints)
 
         // find random target with given mapping probabilities
         // If needed for performance, find method to remove thread divergence
+        // Note: changing 4 to numMappings in for loop reduced performance 50%
         float currentProb = curand_uniform(&state);
         float totalProb = 0.0f;
-        for(int j = 0; j < 4; j++)
+        for(int j = 0; j < numMappings; j++)
         {
             totalProb += maps[j].p;
             if(currentProb < totalProb)

@@ -10,15 +10,17 @@
 #define FRACTALMODEL_HPP
 
 #include "defaultvalues.hpp"
+#include "mapping.hpp"
 
 class FractalModel
 {
     public:
-        FractalModel() : m_numPoints(DEFAULT_POINTS), m_numMappings(4) {} 
-        ~FractalModel() {}
+        FractalModel();
+        ~FractalModel();
 
         int m_numPoints;
         int m_numMappings;
+        mapping* m_mappingsPtr;
 };
 
 #endif
