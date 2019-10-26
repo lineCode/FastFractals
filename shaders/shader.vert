@@ -5,8 +5,8 @@ layout (location = 1) in vec2 color;
 
 out vec4 vColor;
 
-mat2 scaling = mat2(0.35, 0.0, 0.0, 0.2);
-vec2 translation = vec2(0.0, -1.0);
+uniform mat2 scaling;
+uniform vec2 translation;
 
 /*
  * Converts HSV value to RGB

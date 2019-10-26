@@ -37,11 +37,12 @@ void cudaInit()
 {
     printf("===CUDA INITIALIZATION===\n");
 
-    // Select CUDA device with compute capability >=3.0
+    // Select CUDA device with compute capability >=6.0
+    // Compute capability 6.0 needed for unified memory
     int device;
     cudaDeviceProp prop;
     memset(&prop, 0, sizeof(cudaDeviceProp));
-    prop.major = 3;
+    prop.major = 6;
     prop.minor = 0;
     HANDLE_ERROR( cudaChooseDevice(&device, &prop) );
 

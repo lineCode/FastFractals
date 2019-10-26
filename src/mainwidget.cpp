@@ -79,6 +79,19 @@ void MainWidget::setUpUI()
             });
     vLayout->addWidget(slider);
     vLayout->setStretch(1, 1);
+
+    QSlider* slider2 = new QSlider(Qt::Horizontal, this);
+    slider2->setMinimum(-100);
+    slider2->setMaximum(100);
+    slider2->setValue(0);
+    connect(slider2, &QSlider::valueChanged,
+            [this](int value)
+            {
+                m_currentModel->m_mappingsPtr[1].x = value / 100.0f * 1.6f;
+                m_fractalGenerator->generateFractal();
+            });
+    vLayout->addWidget(slider2);
+    vLayout->setStretch(2, 1);
 }
 
 MainWidget::~MainWidget()
