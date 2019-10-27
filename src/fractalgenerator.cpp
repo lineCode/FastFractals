@@ -10,8 +10,8 @@
 #include "cuda.hpp"
 #include "fractalmodel.hpp"
 
-FractalGenerator::FractalGenerator(FractalModel* model, QObject* parent) :
-    QObject(parent), m_cudaResource(0), m_currentModel(model)
+FractalGenerator::FractalGenerator(QObject* parent) :
+    QObject(parent), m_cudaResource(0), m_currentModel(nullptr)
 {
     cudaInit();
 }
@@ -19,6 +19,16 @@ FractalGenerator::FractalGenerator(FractalModel* model, QObject* parent) :
 FractalGenerator::~FractalGenerator()
 {
     cudaShutdown();
+}
+
+/*
+ * Sets m_currentModel pointer without regenerating fractal
+ * Called by MainWidget constructor to allow for cudaInit() to be called before
+ * any FractalModel allocates device memory
+ */
+void FractalGenerator::setModel(FractalModel* model)
+{
+    m_currentModel = model;
 }
 
 /*
@@ -31,7 +41,7 @@ void FractalGenerator::registerGLBuffer(GLuint buf)
 }
 
 /*
- * Updates m_curentModel pointer and regenerates fractal
+ * Updates m_currentModel pointer and regenerates fractal
  * Called by MainWidget UI elements
  */
 void FractalGenerator::updateModel(FractalModel* newModel)

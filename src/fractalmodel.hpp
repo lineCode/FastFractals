@@ -18,9 +18,10 @@
 class FractalModel
 {
     public:
-        FractalModel();
+        FractalModel(const char* file);
         ~FractalModel();
 
+        QString name;
         int m_numPoints;
 
         int m_numMappings;

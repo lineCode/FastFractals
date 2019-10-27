@@ -19,9 +19,10 @@ class FractalGenerator : public QObject
     Q_OBJECT
 
     public:
-        FractalGenerator(FractalModel* model, QObject* parent = nullptr);
+        FractalGenerator(QObject* parent = nullptr);
         ~FractalGenerator();
 
+        void setModel(FractalModel* model);
         void cleanup();
 
     signals:

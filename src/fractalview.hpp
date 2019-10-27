@@ -44,6 +44,7 @@ class FractalView : public QOpenGLWidget, protected QOpenGLFunctions
         QOpenGLVertexArrayObject m_vao;
         QOpenGLShaderProgram* m_program;
 
+        int m_numMappingsUniform;
         int m_scalingUniform;
         int m_translationUniform;
 

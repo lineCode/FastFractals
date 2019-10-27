@@ -53,6 +53,7 @@ void FractalView::initializeGL()
     // Cache uniform locations
     m_scalingUniform = m_program->uniformLocation("scaling");
     m_translationUniform = m_program->uniformLocation("translation");
+    m_numMappingsUniform = m_program->uniformLocation("numMappings");
 
     // Create VBO
     m_vbo.create();
@@ -102,6 +103,8 @@ void FractalView::paintGL()
             m_currentModel->scalingMatrix);
     m_program->setUniformValue(m_translationUniform,
             m_currentModel->translationVector);
+    m_program->setUniformValue(m_numMappingsUniform,
+            m_currentModel->m_numMappings);
 
     m_vao.bind();
     glDrawArrays(GL_POINTS, 0, m_currentModel->m_numPoints);

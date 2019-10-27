@@ -18,10 +18,14 @@
 
 MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
 {
-    m_currentModel = new FractalModel();
+    // Construct FractalGenerator first to allow for CUDA initialization needed
+    // before FractalModels allocate device memory
+    m_fractalGenerator = new FractalGenerator();
+    
+    m_currentModel = new FractalModel("./fractals/tree.frac");
 
     m_fractalView = new FractalView(m_currentModel, this);
-    m_fractalGenerator = new FractalGenerator(m_currentModel);
+    m_fractalGenerator->setModel(m_currentModel);
 
     // connect signals and slots between view and generator
     connect(m_fractalView, &FractalView::glBufferCreated,
@@ -62,7 +66,6 @@ void MainWidget::setUpUI()
     connect(button, &QPushButton::clicked, m_fractalGenerator,
             &FractalGenerator::generateFractal);
     vLayout->addWidget(button);
-    vLayout->setStretch(0, 1);
 
     QSlider* slider = new QSlider(Qt::Horizontal, this);
     slider->setMinimum(MIN_POINTS);
@@ -78,20 +81,6 @@ void MainWidget::setUpUI()
                 m_fractalGenerator->generateFractal();
             });
     vLayout->addWidget(slider);
-    vLayout->setStretch(1, 1);
-
-    QSlider* slider2 = new QSlider(Qt::Horizontal, this);
-    slider2->setMinimum(-100);
-    slider2->setMaximum(100);
-    slider2->setValue(0);
-    connect(slider2, &QSlider::valueChanged,
-            [this](int value)
-            {
-                m_currentModel->m_mappingsPtr[1].x = value / 100.0f * 1.6f;
-                m_fractalGenerator->generateFractal();
-            });
-    vLayout->addWidget(slider2);
-    vLayout->setStretch(2, 1);
 }
 
 MainWidget::~MainWidget()
