@@ -22,7 +22,7 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
     // before FractalModels allocate device memory
     m_fractalGenerator = new FractalGenerator();
     
-    m_currentModel = new FractalModel("./fractals/tree.frac");
+    m_currentModel = new FractalModel("./fractals/barnsleyfern.frac");
 
     m_fractalView = new FractalView(m_currentModel, this);
     m_fractalGenerator->setModel(m_currentModel);
