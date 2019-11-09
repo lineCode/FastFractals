@@ -18,7 +18,7 @@
 class FractalModel
 {
     public:
-        FractalModel(const char* file);
+        FractalModel(QString filename);
         ~FractalModel();
 
         QString name;

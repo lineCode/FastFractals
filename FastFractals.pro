@@ -35,6 +35,7 @@ HEADERS += mainwidget.hpp \
     mapping.hpp
 SOURCES += main.cpp \
     mainwidget.cpp \
+    mainwidget_ui.cpp \
     fractalview.cpp \
     fractalgenerator.cpp \
     fractalmodel.cpp

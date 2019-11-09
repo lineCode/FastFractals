@@ -15,11 +15,11 @@
 /*
  * TODO: this constructor can use more error checking in its file IO
  */
-FractalModel::FractalModel(const char* fileName) : m_numPoints(DEFAULT_POINTS)
+FractalModel::FractalModel(QString filename) : m_numPoints(DEFAULT_POINTS)
 {
-    QFile file(fileName);
+    QFile file(filename);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        qFatal("ERROR: file %s not found - exiting.", fileName);
+        qFatal("ERROR: file %s not found - exiting.", qPrintable(filename));
     QTextStream in(&file);
 
     // Read in name of fractal

@@ -7,8 +7,7 @@
  **/
 
 #include <QtWidgets>
-#include <QPushButton>
-#include <QSlider>
+#include <QDirIterator>
 
 #include "mainwidget.hpp"
 #include "fractalview.hpp"
@@ -21,9 +20,17 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
     // Construct FractalGenerator first to allow for CUDA initialization needed
     // before FractalModels allocate device memory
     m_fractalGenerator = new FractalGenerator();
-    
-    m_currentModel = new FractalModel("./fractals/barnsleyfern.frac");
+ 
+    // Read all fractal files and generate FractalModels
+    QDirIterator it(FRACTAL_DIR, QDir::Files);
+    while(it.hasNext())
+    {
+        FractalModel* newModel = new FractalModel(it.next());
+        m_modelsMap.insert(newModel->name, newModel);
+    }
+    m_currentModel = m_modelsMap.first();
 
+    // Create the FractalView widget and set model for view and generator
     m_fractalView = new FractalView(m_currentModel, this);
     m_fractalGenerator->setModel(m_currentModel);
 
@@ -40,55 +47,27 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
             m_fractalGenerator, &FractalGenerator::updateModel);
     
     // seperating out UI initialization into seperate function for clarity
+    // see 'mainwidget_ui.cpp'
     setUpUI();
-}
-
-/*
- * Sets up the UI components for the MainWidget
- * Called in the constructor
- */
-void MainWidget::setUpUI()
-{
-    // Set up horizontal layout
-    QHBoxLayout* hLayout = new QHBoxLayout(this);
-    hLayout->addWidget(m_fractalView);
-    hLayout->setStretch(0, 3);
-    setLayout(hLayout);
-
-    // Set up vertical layout
-    QVBoxLayout* vLayout = new QVBoxLayout();
-    hLayout->addLayout(vLayout, 1);
-    
-    // TODO remove temporary widget
-    QPushButton* button = new QPushButton("CUDA", this);
-    button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    button->setFlat(true);
-    connect(button, &QPushButton::clicked, m_fractalGenerator,
-            &FractalGenerator::generateFractal);
-    vLayout->addWidget(button);
-
-    QSlider* slider = new QSlider(Qt::Horizontal, this);
-    slider->setMinimum(MIN_POINTS);
-    slider->setMaximum(MAX_POINTS);
-    slider->setTickPosition(QSlider::TicksBothSides);
-    slider->setTickInterval(MAX_POINTS / 4);
-    slider->setValue(DEFAULT_POINTS);
-    slider->setSingleStep(1000);
-    connect(slider, &QSlider::valueChanged,
-            [this](int value)
-            {
-                m_currentModel->m_numPoints = value;
-                m_fractalGenerator->generateFractal();
-            });
-    vLayout->addWidget(slider);
 }
 
 MainWidget::~MainWidget()
 {
-    delete m_currentModel;
+    // Delete all FractalModels - 'foreach' is a Qt keyword
+    foreach (FractalModel* model, m_modelsMap)
+        delete model;
 
     // No need to delete fractalView - parented to this widget
     delete m_fractalGenerator;
+}
+
+/*
+ * Updates the model and synchronizes UI elements
+ * Emits the modelUpdated signal to regenerate and render fractal
+ */
+void MainWidget::updateModel()
+{
+    emit modelUpdated(m_currentModel);
 }
 
 /*

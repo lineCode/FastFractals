@@ -10,6 +10,7 @@
 #define MAINWIDGET_HPP
 
 #include <QWidget>
+#include <QMap>
 
 class FractalView;
 class FractalGenerator;
@@ -31,11 +32,13 @@ class MainWidget : public QWidget
 
     private:
         void setUpUI();
+        void updateModel();
 
         FractalView* m_fractalView;
         FractalGenerator* m_fractalGenerator;
         FractalModel* m_currentModel;
 
+        QMap<QString, FractalModel*> m_modelsMap;
 };
 
 #endif
