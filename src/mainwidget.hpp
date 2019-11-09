@@ -15,6 +15,7 @@
 class FractalView;
 class FractalGenerator;
 class FractalModel;
+class QSlider;
 
 class MainWidget : public QWidget
 {
@@ -28,6 +29,7 @@ class MainWidget : public QWidget
         void modelUpdated(FractalModel* newModel);
 
     protected:
+        void showEvent(QShowEvent* event) override;
         void closeEvent(QCloseEvent* event) override;
 
     private:
@@ -39,6 +41,8 @@ class MainWidget : public QWidget
         FractalModel* m_currentModel;
 
         QMap<QString, FractalModel*> m_modelsMap;
+
+        QSlider* numPointsSlider;
 };
 
 #endif

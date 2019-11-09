@@ -59,18 +59,17 @@ void MainWidget::setUpUI()
             &FractalGenerator::generateFractal);
     vLayout->addWidget(button);
 
-    QSlider* slider = new QSlider(Qt::Horizontal, this);
-    slider->setMinimum(MIN_POINTS);
-    slider->setMaximum(MAX_POINTS);
-    slider->setTickPosition(QSlider::TicksBothSides);
-    slider->setTickInterval(MAX_POINTS / 4);
-    slider->setValue(DEFAULT_POINTS);
-    slider->setSingleStep(1000);
-    connect(slider, &QSlider::valueChanged,
+    numPointsSlider = new QSlider(Qt::Horizontal, this);
+    numPointsSlider->setMinimum(MIN_POINTS);
+    numPointsSlider->setMaximum(MAX_POINTS);
+    numPointsSlider->setTickPosition(QSlider::TicksBothSides);
+    numPointsSlider->setTickInterval(MAX_POINTS / 4 - 1);
+    numPointsSlider->setSingleStep(1000);
+    connect(numPointsSlider, &QSlider::valueChanged,
             [this](int value)
             {
                 m_currentModel->m_numPoints = value;
                 updateModel();
             });
-    vLayout->addWidget(slider);
+    vLayout->addWidget(numPointsSlider);
 }

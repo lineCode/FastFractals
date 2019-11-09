@@ -49,6 +49,7 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
     // seperating out UI initialization into seperate function for clarity
     // see 'mainwidget_ui.cpp'
     setUpUI();
+    
 }
 
 MainWidget::~MainWidget()
@@ -59,6 +60,8 @@ MainWidget::~MainWidget()
 
     // No need to delete fractalView - parented to this widget
     delete m_fractalGenerator;
+
+    // No need to delete UI elements - also parented to this widget
 }
 
 /*
@@ -67,7 +70,17 @@ MainWidget::~MainWidget()
  */
 void MainWidget::updateModel()
 {
+    numPointsSlider->setValue(m_currentModel->m_numPoints);
     emit modelUpdated(m_currentModel);
+}
+
+/*
+ * Overriding showEvent function to generate initial fractal on window opening
+ */
+void MainWidget::showEvent(QShowEvent* event)
+{
+    QWidget::showEvent(event);
+    updateModel();
 }
 
 /*
