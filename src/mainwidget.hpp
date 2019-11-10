@@ -42,7 +42,8 @@ class MainWidget : public QWidget
 
         QMap<QString, FractalModel*> m_modelsMap;
 
-        QSlider* numPointsSlider;
+        QSlider* m_numThreadsSlider;
+        QSlider* m_numPointsSlider;
 };
 
 #endif

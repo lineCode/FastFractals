@@ -8,6 +8,10 @@
 
 #define FRACTAL_DIR "./fractals/"
 
+#define MIN_THREADS 1
+#define DEFAULT_THREADS 256
+#define MAX_THREADS 512
+
 #define MIN_POINTS 1
 #define DEFAULT_POINTS 65536*4
 #define MAX_POINTS 65536*8

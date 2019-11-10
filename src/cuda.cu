@@ -122,13 +122,9 @@ void cudaDeallocateMapping(mapping* mapping)
     HANDLE_ERROR( cudaFree(mapping) );
 }
 
-void cudaRunKernel(void* d_pointData, int numPoints,
+void cudaRunKernel(int blockSize, void* d_pointData, int numPoints,
         mapping* d_mappings, int numMappings)
 {
-    // calculate block numbers and block size
-    int blockSize = 256;
-    //int iterations = 256;
-    //int numBlocks = (numPoints + blockSize - 1) / (blockSize * iterations); 
     int numBlocks = 1;
     printf("CUDA: Running kernel (%d block(s), %d threads per block) - ",
             numBlocks, blockSize);

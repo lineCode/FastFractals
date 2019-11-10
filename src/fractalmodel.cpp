@@ -9,13 +9,14 @@
 #include <QFile>
 
 #include "fractalmodel.hpp"
-
 #include "cuda.hpp"
+#include "defaultvalues.hpp"
 
 /*
  * TODO: this constructor can use more error checking in its file IO
  */
-FractalModel::FractalModel(QString filename) : m_numPoints(DEFAULT_POINTS)
+FractalModel::FractalModel(QString filename) :
+    m_numThreads(DEFAULT_THREADS), m_numPoints(DEFAULT_POINTS)
 {
     QFile file(filename);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))

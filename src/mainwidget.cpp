@@ -70,7 +70,8 @@ MainWidget::~MainWidget()
  */
 void MainWidget::updateModel()
 {
-    numPointsSlider->setValue(m_currentModel->m_numPoints);
+    m_numThreadsSlider->setValue(m_currentModel->m_numThreads);
+    m_numPointsSlider->setValue(m_currentModel->m_numPoints);
     emit modelUpdated(m_currentModel);
 }
 

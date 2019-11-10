@@ -12,7 +12,6 @@
 #include <QMatrix2x2>
 #include <QVector2D>
 
-#include "defaultvalues.hpp"
 #include "mapping.hpp"
 
 class FractalModel
@@ -20,6 +19,8 @@ class FractalModel
     public:
         FractalModel(QString filename);
         ~FractalModel();
+
+        int m_numThreads;
 
         QString name;
         int m_numPoints;
