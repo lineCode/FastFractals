@@ -122,12 +122,10 @@ void cudaDeallocateMapping(mapping* mapping)
     HANDLE_ERROR( cudaFree(mapping) );
 }
 
-void cudaRunKernel(int blockSize, void* d_pointData, int numPoints,
+float cudaRunKernel(int blockSize, void* d_pointData, int numPoints,
         mapping* d_mappings, int numMappings)
 {
     int numBlocks = 1;
-    printf("CUDA: Running kernel (%d block(s), %d threads per block) - ",
-            numBlocks, blockSize);
     
     // set up CUDA events for timing the kernel
     cudaEvent_t start, stop;
@@ -147,7 +145,7 @@ void cudaRunKernel(int blockSize, void* d_pointData, int numPoints,
     HANDLE_ERROR( cudaEventSynchronize(stop) );
     float milliseconds = 0;
     HANDLE_ERROR( cudaEventElapsedTime(&milliseconds, start, stop) );
-    printf("%f ms\n", milliseconds);
+    return milliseconds;
 }
 
 void cudaShutdown()

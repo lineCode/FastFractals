@@ -16,6 +16,7 @@ class FractalView;
 class FractalGenerator;
 class FractalModel;
 class QSlider;
+class QLabel;
 
 class MainWidget : public QWidget
 {
@@ -42,8 +43,11 @@ class MainWidget : public QWidget
 
         QMap<QString, FractalModel*> m_modelsMap;
 
+        QLabel* m_numThreadsLabel;
         QSlider* m_numThreadsSlider;
+        QLabel* m_numPointsLabel;
         QSlider* m_numPointsSlider;
+        QLabel* m_kernelRuntimeLabel;
 };
 
 #endif

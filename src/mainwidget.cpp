@@ -70,7 +70,11 @@ MainWidget::~MainWidget()
  */
 void MainWidget::updateModel()
 {
+    m_numThreadsLabel->setText(
+        QString("Number of threads: %1").arg(m_currentModel->m_numThreads));
     m_numThreadsSlider->setValue(m_currentModel->m_numThreads);
+    m_numPointsLabel->setText(
+        QString("Number of points: %1").arg(m_currentModel->m_numPoints));
     m_numPointsSlider->setValue(m_currentModel->m_numPoints);
     emit modelUpdated(m_currentModel);
 }

@@ -59,9 +59,10 @@ void FractalGenerator::generateFractal()
     void* devicePtr;
     size_t size;
     cudaMapResource(m_cudaResource, &devicePtr, &size);
-    cudaRunKernel(m_currentModel->m_numThreads,
+    float milliseconds = cudaRunKernel(m_currentModel->m_numThreads,
             devicePtr, m_currentModel->m_numPoints, 
             m_currentModel->m_mappingsPtr, m_currentModel->m_numMappings);
+    m_currentModel->m_kernelRuntime = milliseconds;
     cudaUnmapResource(m_cudaResource);
 
     // emit signal to schedule a redraw in FractalView
