@@ -97,7 +97,7 @@ void MainWidget::setUpUI()
     m_numPointsSlider->setMaximum(MAX_POINTS);
     m_numPointsSlider->setValue(m_currentModel->m_numPoints);
     m_numPointsSlider->setTickPosition(QSlider::TicksBothSides);
-    m_numPointsSlider->setTickInterval(MAX_POINTS / 4 - MIN_POINTS);
+    m_numPointsSlider->setTickInterval(MAX_POINTS / 5 - MIN_POINTS);
     m_numPointsSlider->setSingleStep(1000);
     connect(m_numPointsSlider, &QSlider::valueChanged,
         [this](int value)

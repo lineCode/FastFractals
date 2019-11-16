@@ -37,7 +37,7 @@ class MainWidget : public QWidget
         void closeEvent(QCloseEvent* event) override;
 
     private:
-        void setUpUI();
+        void setUpUI(); // see 'mainwidget_ui.cpp'
         void updateModel();
 
         FractalView* m_fractalView;
