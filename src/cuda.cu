@@ -147,8 +147,3 @@ float cudaRunKernel(int blockSize, void* d_pointData, int numPoints,
     HANDLE_ERROR( cudaEventElapsedTime(&milliseconds, start, stop) );
     return milliseconds;
 }
-
-void cudaShutdown()
-{
-    printf("===CUDA SHUTDOWN===\n");
-}

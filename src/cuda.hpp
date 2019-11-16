@@ -25,6 +25,5 @@ void cudaAllocateMapping(mapping** mapping, int numMappings);
 void cudaDeallocateMapping(mapping* mapping);
 float cudaRunKernel(int blockSize, void* d_pointData, int numPoints, 
         mapping* d_mappings, int numMappings);
-void cudaShutdown();
 
 #endif

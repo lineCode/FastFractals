@@ -16,11 +16,6 @@ FractalGenerator::FractalGenerator(QObject* parent) :
     cudaInit();
 }
 
-FractalGenerator::~FractalGenerator()
-{
-    cudaShutdown();
-}
-
 /*
  * Sets m_currentModel pointer without regenerating fractal
  * Called by MainWidget constructor to allow for cudaInit() to be called before
@@ -29,6 +24,15 @@ FractalGenerator::~FractalGenerator()
 void FractalGenerator::setModel(FractalModel* model)
 {
     m_currentModel = model;
+}
+
+/*
+ * Cleans up CUDA graphics resource
+ * Called on exit
+ */
+void FractalGenerator::cleanup()
+{
+    cudaUnregisterResource(m_cudaResource);
 }
 
 /*
@@ -67,13 +71,4 @@ void FractalGenerator::generateFractal()
 
     // emit signal to schedule a redraw in FractalView
     emit fractalUpdated();
-}
-
-/*
- * Cleans up CUDA graphics resource
- * Called on exit
- */
-void FractalGenerator::cleanup()
-{
-    cudaUnregisterResource(m_cudaResource);
 }
