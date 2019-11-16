@@ -34,20 +34,24 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent)
     m_fractalView = new FractalView(m_currentModel, this);
     m_fractalGenerator->setModel(m_currentModel);
 
-    // connect signals and slots between view and generator
+    // Connect signals and slots between view and generator
     connect(m_fractalView, &FractalView::glBufferCreated,
-            m_fractalGenerator, &FractalGenerator::registerGLBuffer);
+        m_fractalGenerator, &FractalGenerator::registerGLBuffer);
     connect(m_fractalGenerator, &FractalGenerator::fractalUpdated,
-            [this](){m_fractalView->update();});
+        [this](){m_fractalView->update();});
 
-    // set up model synchronization between MainWidget/view/generator
+    // Set up model synchronization between MainWidget and view/generator
     connect(this, &MainWidget::modelUpdated,
-            m_fractalView, &FractalView::updateModel);
+        m_fractalView, &FractalView::updateModel);
     connect(this, &MainWidget::modelUpdated,
-            m_fractalGenerator, &FractalGenerator::updateModel);
+        m_fractalGenerator, &FractalGenerator::updateModel);
+
+    // Allow for kernel timing label to update on fractal generation
+    connect(m_fractalGenerator, &FractalGenerator::fractalUpdated,
+            this, &MainWidget::fractalUpdated);
     
-    // seperating out UI initialization into seperate function for clarity
-    // see 'mainwidget_ui.cpp'
+    // Seperating out UI initialization into seperate function for clarity
+    // See 'mainwidget_ui.cpp'
     setUpUI();
     
 }
@@ -62,6 +66,17 @@ MainWidget::~MainWidget()
     delete m_fractalGenerator;
 
     // No need to delete UI elements - also parented to this widget
+}
+
+/*
+ * Updates the kernel timing label on each fractal generation
+ */
+void MainWidget::fractalUpdated()
+{ 
+    QString kernelRuntime = QString::number(m_currentModel->m_kernelRuntime, 
+        'f', 6);
+    QString string = "Kernel runtime: " + kernelRuntime + " ms";
+    m_kernelRuntimeLabel->setText(string);
 }
 
 /*

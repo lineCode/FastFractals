@@ -29,6 +29,9 @@ class MainWidget : public QWidget
     signals:
         void modelUpdated(FractalModel* newModel);
 
+    private slots:
+        void fractalUpdated();
+
     protected:
         void showEvent(QShowEvent* event) override;
         void closeEvent(QCloseEvent* event) override;
