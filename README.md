@@ -65,4 +65,14 @@ $ ./FastFractals
 
 ## Acknowledgments
 
+Various articles and resources I found both useful and prescriptive during development:
+
+- [Nvidia Developer Blog: Introduction to CUDA](https://devblogs.nvidia.com/even-easier-introduction-cuda/) - Collection of follow up articles covering various CUDA topics
+- [Clean Qt](https://www.cleanqt.io/home) - Thorough crash course in Qt for C++ developers
+- [Qt Weekly: Qt and CUDA](https://www.qt.io/blog/2015/03/03/qt-weekly-28-qt-and-cuda-on-the-jetson-tk1) - Integration of nvcc and CUDA runtime into Qt build system
+- [Trent Reed: Qt5 OpenGL](https://www.trentreed.net/topics/opengl/) - Good overview of OpenGL implementation within Qt5
+- [LearnOpenGL.com](https://learnopengl.com/) - Thorough OpenGL tutorial and reference
+- [Lol Engine Blog](http://lolengine.net/blog/2013/07/27/rgb-to-hsv-in-glsl) - Fast branchless HSV to RGB conversion in GLSL
+- [Larry Riddle: Iterated Function Systems](http://larryriddle.agnesscott.org/ifs/ifs.htm) - Examples and descriptions of numerous iterated function systems and their associated fractals
+
 ## TODO
